@@ -3,39 +3,30 @@
 
 #include "tic-tac-toe.h"
 
+#include <vector>
+#include <string>
+
 using namespace std;
-
-/* class Field {
-public:
-    Field (int n, int m) {
-        
-    }
-
-    bool makeMove(Player* player, int x, int y) {
-        
-    }
-
-    int status(Player* player) { // 2 -- win, -2 -- fail, 0 -- the game in progress 1 -- draw, -1 -- other;
-        
-    }
-
-private:
-    vector<vector<Player*>> d_grid;
-}; */
 
 class Player {
 public:
-    Player(string p_name, bool p_isCross) {
-        name = p_name;
-        isCross = p_isCross;
+    Player(string name, bool isCross)
+    : d_name(name),
+    d_isCross(isCross)
+    {    
     }
 
     string getName() {
-        return name;
+        return d_name;
     }
+
+    bool getIsCross() {
+        return d_isCross;
+    }
+
 private:
-    string name;
-    bool isCross;
+    string d_name;
+    bool d_isCross;
 };
 
 void clearScreen() {
@@ -54,11 +45,10 @@ int main()
     cin >> name2;
     clearScreen();
 
-    // cout << "Welcome " << name1 << " and " << name2;
-
     Player player1(name1, true);
     Player player2(name2, false);
-    cout << player1.getName() << " " << player2.getName();
+
+    cout << "Welcome " << player1.getName() << " and " << player2.getName();
     return 0;
 }
 	

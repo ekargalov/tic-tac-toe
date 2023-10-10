@@ -4,7 +4,5 @@
 #pragma once
 
 #include <iostream>
-#include <vector>
-#include <string>
 
 // TODO: установите здесь ссылки на дополнительные заголовки, требующиеся для программы.
