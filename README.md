@@ -7,10 +7,11 @@ TBD
 ## Work plan
 1. Implement a tic-tak-toe prototype
 2. Refactor into different files with corresponding names
-3. Reimplement `Player`, `Field` and etc to be inherited from some base e.g. `BasicPlayer`
-4. Start doing unit tests
-5. Create one more game using previously created `Basic`s, e.g. battleship
-6. Add CI/CD ???
+3. [Make a m,n,k-game](https://en.wikipedia.org/wiki/M,n,k-game)
+4. Reimplement `Player`, `Field` and etc to be inherited from some base e.g. `BasicPlayer`
+5. Start doing unit tests
+6. Create one more game using previously created `Basic`s, e.g. battleship
+7. Add CI/CD ???
 
 ## Follow-up questions
 1. Header guards
