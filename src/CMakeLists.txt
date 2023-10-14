@@ -1,1 +1,1 @@
-﻿add_executable (tic-tac-toe "tic-tac-toe.cpp" "tic-tac-toe.h")
+﻿add_executable (tic-tac-toe tictactoe.cpp main.cpp)
