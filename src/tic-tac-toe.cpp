@@ -64,7 +64,7 @@ private:
         for (int k = 1; y - k >= 0 && d_grid[x][y - k] == p; k++) {
             counter++;
         }
-        for (int k = 1; y + k >= 0 && d_grid[x][y + k] == p; k++) {
+        for (int k = 1; y + k < n && d_grid[x][y + k] == p; k++) {
             counter++;
         }
         if (counter == d_k) {
