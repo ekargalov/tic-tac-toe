@@ -47,6 +47,8 @@ public:
         }
         d_grid[x][y] = &player;
         d_cellsLeft--;
+
+        return status(x, y);
     }
 
 private:
@@ -56,8 +58,8 @@ private:
 
     Status status(int x, int y) const { // 0 -- win,  1 -- draw,  2 -- the game in progress
         const Player *p = d_grid[x][y];
-        int m = d_grid.size();
-        int n = d_grid.front().size();
+        size_t m = d_grid.size();
+        size_t n = d_grid.front().size();
 
         // Horizontal checking
         int counter = 1;
@@ -67,9 +69,51 @@ private:
         for (int k = 1; y + k < n && d_grid[x][y + k] == p; k++) {
             counter++;
         }
-        if (counter == d_k) {
+        if (counter >= d_k) {
             return e_WIN;
         }
+
+        // Vertical checking
+        counter = 1;
+        for (int k = 1; x - k >= 0 && d_grid[x - k][y] == p; k++) {
+            counter++;
+        }
+        for (int k = 1; x + k < m && d_grid[x + k][y] == p; k++) {
+            counter++;
+        }
+        if (counter >= d_k) {
+            return e_WIN;
+        }
+
+        // Diagonal checking
+        counter = 1;
+        for (int k = 1; x - k >= 0 && y - k >= 0 && d_grid[x - k][y - k] == p; k++) {
+            counter++;
+        }
+        for (int k = 1; x + k < m && y + k < n && d_grid[x + k][y + k] == p; k++) {
+            counter++;
+        }
+        if (counter >= d_k) {
+            return e_WIN;
+        }
+
+        // Anti-diagonal checking
+        counter = 1;
+        for (int k = 1; x - k >= 0 && y + k >= 0 && d_grid[x - k][y + k] == p; k++) {
+            counter++;
+        }
+        for (int k = 1; x + k < m && y - k < n && d_grid[x + k][y - k] == p; k++) {
+            counter++;
+        }
+        if (counter >= d_k) {
+            return e_WIN;
+        }
+
+        if (d_cellsLeft == 0) {
+            return e_DRAW;
+        }
+
+        return e_IN_PROGRESS;
     }
 };
 
@@ -91,9 +135,52 @@ int main()
 
     Player player1(name1);
     Player player2(name2);
-    Field field(3, 3, 3);
+    cout << "Welcome " << player1.getName() << " and " << player2.getName() << "\n";
 
-    cout << "Welcome " << player1.getName() << " and " << player2.getName();
+    // DRAW TEST
+    Field field(3, 3, 3);
+    cout << field.makeMove(player1, 0, 0) << " ";
+    cout << field.makeMove(player2, 1, 1) << " ";
+    cout << field.makeMove(player1, 0, 1) << " ";
+    cout << field.makeMove(player2, 1, 0) << " ";
+    cout << field.makeMove(player1, 2, 2) << " ";
+    cout << field.makeMove(player2, 2, 1) << " ";
+    cout << field.makeMove(player1, 2, 0) << " ";
+    cout << field.makeMove(player2, 1, 2) << " ";
+    cout << field.makeMove(player1, 0, 2) << "\n";
+
+    // HORIZONTAL WIN TEST
+    Field field2(3, 3, 3);
+    cout << field2.makeMove(player1, 0, 0) << " ";
+    cout << field2.makeMove(player2, 1, 0) << " ";
+    cout << field2.makeMove(player1, 0, 1) << " ";
+    cout << field2.makeMove(player2, 1, 1) << " ";
+    cout << field2.makeMove(player1, 0, 2) << "\n";
+
+    // VERTICAL WIN TEST
+    Field field3(3, 3, 3);
+    cout << field3.makeMove(player1, 0, 0) << " ";
+    cout << field3.makeMove(player2, 0, 1) << " ";
+    cout << field3.makeMove(player1, 1, 0) << " ";
+    cout << field3.makeMove(player2, 1, 1) << " ";
+    cout << field3.makeMove(player1, 2, 0) << "\n";
+
+    // DIAGONAL WIN TEST
+    Field field4(3, 3, 3);
+    cout << field4.makeMove(player1, 0, 0) << " ";
+    cout << field4.makeMove(player2, 0, 1) << " ";
+    cout << field4.makeMove(player1, 1, 1) << " ";
+    cout << field4.makeMove(player2, 2, 1) << " ";
+    cout << field4.makeMove(player1, 2, 2) << "\n";
+
+    // ANTI-DIAGONAL WIN TEST
+    Field field5(3, 3, 3);
+    cout << field5.makeMove(player1, 0, 2) << " ";
+    cout << field5.makeMove(player2, 0, 1) << " ";
+    cout << field5.makeMove(player1, 1, 1) << " ";
+    cout << field5.makeMove(player2, 1, 0) << " ";
+    cout << field5.makeMove(player1, 2, 0) << "\n";
+
     return 0;
 }
 	
