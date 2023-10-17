@@ -42,13 +42,33 @@ public:
     }
 
     Status makeMove(const Player& player, int x, int y) {
-        if ((x >= d_grid.size()) || (y >= d_grid.back().size()) || (d_grid[x][y] != nullptr)) {
+        if ((x >= d_grid.size()) || (x < 0) ||
+            (y >= d_grid.back().size()) || (y < 0) || 
+            (d_grid[x][y] != nullptr)) {
+
             return e_ERROR;
         }
         d_grid[x][y] = &player;
         d_cellsLeft--;
 
         return status(x, y);
+    }
+
+    void getGrid(const Player& player1, const Player& player2) const {
+        for (auto row : d_grid) {
+            for (auto item : row) {
+                if (item == &player1) {
+                    cout << "X" << " ";
+                }
+                else if (item == &player2) {
+                    cout << "O" << " ";
+                }
+                else {
+                    cout << "  ";
+                }
+            }
+            cout << "\n";
+        }
     }
 
 private:
@@ -63,10 +83,10 @@ private:
 
         // Horizontal checking
         int counter = 1;
-        for (int k = 1; y - k >= 0 && d_grid[x][y - k] == p; k++) {
+        for (int k = 1; (y - k) >= 0 && d_grid[x][y - k] == p; k++) {
             counter++;
         }
-        for (int k = 1; y + k < n && d_grid[x][y + k] == p; k++) {
+        for (int k = 1; (y + k) < n && d_grid[x][y + k] == p; k++) {
             counter++;
         }
         if (counter >= d_k) {
@@ -75,10 +95,10 @@ private:
 
         // Vertical checking
         counter = 1;
-        for (int k = 1; x - k >= 0 && d_grid[x - k][y] == p; k++) {
+        for (int k = 1; (x - k) >= 0 && d_grid[x - k][y] == p; k++) {
             counter++;
         }
-        for (int k = 1; x + k < m && d_grid[x + k][y] == p; k++) {
+        for (int k = 1; (x + k) < m && d_grid[x + k][y] == p; k++) {
             counter++;
         }
         if (counter >= d_k) {
@@ -87,10 +107,10 @@ private:
 
         // Diagonal checking
         counter = 1;
-        for (int k = 1; x - k >= 0 && y - k >= 0 && d_grid[x - k][y - k] == p; k++) {
+        for (int k = 1; (x - k) >= 0 && (y - k) >= 0 && d_grid[x - k][y - k] == p; k++) {
             counter++;
         }
-        for (int k = 1; x + k < m && y + k < n && d_grid[x + k][y + k] == p; k++) {
+        for (int k = 1; (x + k) < m && (y + k) < n && d_grid[x + k][y + k] == p; k++) {
             counter++;
         }
         if (counter >= d_k) {
@@ -99,10 +119,10 @@ private:
 
         // Anti-diagonal checking
         counter = 1;
-        for (int k = 1; x - k >= 0 && y + k >= 0 && d_grid[x - k][y + k] == p; k++) {
+        for (int k = 1; (x - k) >= 0 && (y + k) >= 0 && d_grid[x - k][y + k] == p; k++) {
             counter++;
         }
-        for (int k = 1; x + k < m && y - k < n && d_grid[x + k][y - k] == p; k++) {
+        for (int k = 1; (x + k) < m && (y - k) < n && d_grid[x + k][y - k] == p; k++) {
             counter++;
         }
         if (counter >= d_k) {
@@ -181,6 +201,43 @@ int main()
     cout << field5.makeMove(player2, 1, 0) << " ";
     cout << field5.makeMove(player1, 2, 0) << "\n";
 
+    // ERROR TEST
+    Field field6(3, 3, 3);
+    cout << field6.makeMove(player1, 0, 3) << " ";
+    cout << field6.makeMove(player2, -1, 2) << " ";
+    cout << field6.makeMove(player1, 3, 0) << " ";
+    cout << field6.makeMove(player2, -1, 0) << " ";
+    cout << field6.makeMove(player1, 0, 0) << " ";
+    cout << field6.makeMove(player2, 0, 0) << " "; 
+
+    // OUTPUT FIELD
+    Field field_output(3, 3, 3);
+
+    // First move player1
+    clearScreen();
+    field_output.makeMove(player1, 0, 0);
+    field_output.getGrid(player1, player2); 
+    
+    // First move player2
+    clearScreen();
+    field_output.makeMove(player2, 0, 1);
+    field_output.getGrid(player1, player2); 
+
+    // Second move player1
+    clearScreen();
+    field_output.makeMove(player1, 1, 1);
+    field_output.getGrid(player1, player2); 
+
+    // Second move player2
+    clearScreen();
+    field_output.makeMove(player2, 2, 1);
+    field_output.getGrid(player1, player2); 
+
+    // Final move player1
+    clearScreen();
+    field_output.makeMove(player1, 2, 2);
+    field_output.getGrid(player1, player2); 
+    
     return 0;
 }
 	
