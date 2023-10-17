@@ -14,7 +14,7 @@ TBD
 7. Add CI/CD ???
 
 ## Follow-up questions
-1. Header guards
+1. [Header guards](https://dzen.ru/a/YCkMS7SYcFqBc6yY)
 2. Raw pointer (new, delete, nullptr)
 3. References
 4. Basic object concepts and purposes
